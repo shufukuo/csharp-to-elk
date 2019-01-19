@@ -1,5 +1,5 @@
 # Convert C# DataTable to Elastic bulk syntax
-
+If you are new to C# or ELK, and you have to load data from C# to ELK, I hope this is helpful. Moreover, if C# NEST or Elasticsearch.Net is not available to you, here is an HTTP request example for your reference.
 ```csharp
 using System;
 using System.Linq;
@@ -35,18 +35,18 @@ namespace csharp2elk
 
             //
             // datatable2elk
-            // dt: datatable to input
-            // col_id: column that contains elk _id values
-            // rm_col_id: is col_id to be removed from dt
-            // elk_index: elk index name
-            // elk_type: elk type name
+            //  dt: datatable to input
+            //  col_id: column that contains elk _id values
+            //  rm_col_id: is col_id to be removed from dt
+            //  elk_index: elk index name
+            //  elk_type: elk type name
             //
             string bulk = datatable2elk(
                 dt: dt,
                 col_id: "C1",
                 rm_col_id: false,
-                elk_index: "ex_index",
-                elk_type: "ex_type"
+                elk_index: "myindex",
+                elk_type: "mytype"
             );
 
             //
@@ -56,7 +56,7 @@ namespace csharp2elk
                 elk_cmd: bulk,
                 host: "http://127.0.0.1:9200",
                 username: "username",
-                password: "paswword",
+                password: "password",
                 summit_method: "/_bulk?pretty"
             );
 
@@ -88,7 +88,7 @@ namespace csharp2elk
             ;
 
             //
-            // convert columns names of dt to lowercase
+            // convert column names of dt to lowercase
             //
             foreach (DataColumn col in dt.Columns)
             {
@@ -199,4 +199,5 @@ namespace csharp2elk
         }
     }
 }
+
 ```
